@@ -7,36 +7,39 @@ w = rectwin(elements);
 
 spacing = lambda/2;
 the_angle = 50*pi/180;
-theta_x = -the_angle:.01:the_angle;
-theta_y = -the_angle:.01:the_angle;
-[theta_x,theta_y] = meshgrid(0:2*pi/elements:2*pi,0:2*pi/elements:2*pi);
-% theta_y = theta_y';
 
-theta = atan(sqrt(tan(theta_x).^2+tan(theta_y).^2));
-phi = atan(tan(theta_x)./tan(theta_y));
+theta_x = linspace(-pi/2, pi/2, 200);
+theta_y = linspace(-pi/2, pi/2, 200);
 
-dn =  zeros(elements, elements);
-dn(1,1:elements) = spacing*[1:elements];
+
+dn =  zeros(3, elements);
+dn(1,1:elements) = spacing*1:elements;
 
 k = 2*pi/lambda;
-a_r = [sin(theta).*cos(phi); sin(theta).*sin(phi);  cos(theta)];
+
 % E = [];
-% loop through our angle
+E = zeros(length(theta_x), length(theta_y));
 for ii=1:length(theta_x)
-	tmp = 0;
+	for kk=1:length(theta_y)
+		tmp = 0;
 
-	% get the location of where we want the E-field to be computed
-	a = a_r(:, ii) - a_0;	
+		% get the location of where we want the E-field to be computed
 
-	% now loop through all the elements
-	for jj=1:elements
-		tmp = tmp + w(jj)*exp(j*k*dot(a,dn(:,jj)));
+		theta = atan(sqrt(tan(theta_x(ii)).^2+tan(theta_y(kk)).^2));
+		phi = atan(tan(theta_x(ii))./tan(theta_y(kk)));
+		a_r = [sin(theta).*cos(phi); sin(theta).*sin(phi);  cos(theta)];
+		a = a_r - a_0;	
+		% now loop through all the elements
+		for jj=1:elements
+			tmp = tmp + w(jj)*exp(1i*k*dot(a,dn(:,jj)));
+		end
+		E(ii,kk) = tmp;
+		
 	end
-	E(ii) = tmp;
 end
 
 E_db = 10*log10((E.*conj(E)).^2);
-
+save data.mat
 plot(E_db);
 xlabel('Angle (degrees)');
 ylabel('Antenna Pattern (dB)');
