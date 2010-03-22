@@ -26,7 +26,7 @@ for ii=1:length(theta_x)
 		% get the location of where we want the E-field to be computed
 
 		theta = atan(sqrt(tan(theta_x(ii)).^2+tan(theta_y(kk)).^2));
-		phi = atan(tan(theta_x(ii))./tan(theta_y(kk)));
+		phi = atan(tan(theta_y(ii))./tan(theta_x(kk)));
 		a_r = [sin(theta).*cos(phi); sin(theta).*sin(phi);  cos(theta)];
 		a = a_r - a_0;	
 		% now loop through all the elements
