@@ -1,15 +1,15 @@
-
+N = 100;
 elements = 25;
 lambda = .1;
 a_0 = [0 0 0]';
 w = hann(elements);
-w = rectwin(elements);
+% w = rectwin(elements);
 
 spacing = lambda/2;
 the_angle = 50*pi/180;
 
-theta_x = linspace(-pi/2, pi/2, 200);
-theta_y = linspace(-pi/2, pi/2, 200);
+theta_x = linspace(-pi/2, pi/2, N);
+theta_y = linspace(-pi/2, pi/2, N);
 
 
 dn =  zeros(3, elements);
@@ -31,7 +31,7 @@ for ii=1:length(theta_x)
 		a = a_r - a_0;	
 		% now loop through all the elements
 		for jj=1:elements
-			tmp = tmp + w(jj)*exp(1i*k*dot(a,dn(:,jj)));
+			tmp = tmp + w(jj)*exp(j*k*dot(a,dn(:,jj)));
 		end
 		E(ii,kk) = tmp;
 		
