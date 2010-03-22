@@ -40,6 +40,3 @@ end
 
 E_db = 10*log10((E.*conj(E)).^2);
 save data.mat
-plot(E_db);
-xlabel('Angle (degrees)');
-ylabel('Antenna Pattern (dB)');
