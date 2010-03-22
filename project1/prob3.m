@@ -39,7 +39,7 @@ for ii=1:length(theta_x)
 		a = a_r - a_0;	
 		% now loop through all the elements
 		for jj=1:elements
-			tmp = tmp + w(jj)*exp(j*k*dot(a,dn(jj,:)));
+			tmp = tmp + w(jj)*exp(1i*k*dot(a,dn(jj,:)));
 		end
 		E(ii,kk) = tmp;
 		
