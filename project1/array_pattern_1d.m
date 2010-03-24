@@ -1,11 +1,16 @@
-N = 200;
-elements = 5;
+N = 501;
+elements = length(d);
+% elements = 13;
 lambda = .03;
-a_0 = [0 0 0]';
-w = hann(elements);
+a_0 = [sin(pi/4)*cos(0); sin(pi/4)*sin(0); cos(pi/4)];
+% a_0 = [0; 0; 1];
+
+% w = hann(elements);
+% w = hamming(elements);
 w = rectwin(elements);
 
-spacing = .36/elements;
+% spacing = lambda/2;
+% spacing = .36/elements;
 % delta = .36/11.0;
 the_angle = 50*pi/180;
 
@@ -19,9 +24,9 @@ theta = atan(sqrt(tan(theta_x).^2+tan(theta_y).^2));
 phi = atan(tan(theta_x)/tan(theta_y));
 
 dn =  zeros(3, elements);
-dn(1,1:elements) = spacing*[1:elements];
+dn(1,1:elements) = spacing*[0:elements-1];
 % dn(1,1:elements) = delta.*[0 1 4 9 11];
-
+dn = d';
 
 k = 2*pi/lambda;
 a_r = [sin(theta)*cos(phi); sin(theta)*sin(phi);  cos(theta)];
@@ -40,8 +45,9 @@ for ii=1:length(theta_x)
 end
 
 E_db = 10*log10((E.*conj(E)).^2);
-% title_str = sprintf('Azimuthal antenna pattern (%i elements, uneven spacing)', elements);
-title_str = sprintf('Azimuthal antenna pattern (%i elements, %2.0f cm spacing)', elements, spacing*100);
+E_db = E_db - max(E_db);
+title_str = sprintf('Azimuthal antenna pattern (%i elements, 0\\circ)', elements);
+% title_str = sprintf('Azimuthal antenna pattern (%i elements, %2.0f cm spacing)', elements, spacing*100);
 plot(theta_x*180/pi, E_db);
 title(title_str);
 xlabel('Angle (degrees)');

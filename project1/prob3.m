@@ -47,5 +47,5 @@ for ii=1:length(theta_x)
 end
 
 E_db = 10*log10((E.*conj(E)).^2);
-figure;
+% E_db1 = E_db - max(E_db);
 surf(E_db);
