@@ -15,14 +15,14 @@ prt = 1/prf;
 k = 1.38e-23;	% Boltzmann constant
 T_0 = 290;		% std temp
 F_n = 5;		% rec noise figure (dB)
-B = 15e6;		% rec bandwidth
+Bw = 15e6;		% rec bandwidth
 L_s = 12;		% system losses (dB)
 theta_B_h = .8;
 theta_B_v = 15;
 
 
 T_fa = (4*3600);	% time between false alarms
-P_fa = 1/(B*T_fa);	% probability of false alarm
+P_fa = 1/(Bw*T_fa);	% probability of false alarm
 
 
 lambda = c / f;
@@ -42,9 +42,15 @@ SNR_n = -5 * log10(n) + (6.2 + 4.54/sqrt(n + .44)) * SNR_1;
 E_i = SNR_1 / (SNR_n * n); % integration efficiency factor
 
 % max range w/o fluctuation loss
-R_max_ll = (P_av * G * A_e * sig * n * E_i ./ ((4*pi)^2 * k * T_0 * F_n * B * tau * prf .* SNR_1 * L_s)).^(1/4);
-plot(P_d, R_max_ll);
+R_max_ll = (P_av * G * A_e * sig * n * E_i ./ ((4*pi)^2 * k * T_0 * F_n * Bw * tau * prf .* SNR_1 * L_s)).^(1/4);
+plot(P_d, R_max_ll./1000);
+title('Max range against probability of detection, without fluctuation losses');
+xlabel('Probability of Detection');
+ylabel('Maximum Range (km)');
 
-R_max = (P_av * G * A_e * sig * n * E_i ./ ((4*pi)^2 * k * T_0 * F_n * B * tau * prf .* SNR_1 .* L_f * L_s)).^(1/4);
+R_max = (P_av * G * A_e * sig * n * E_i ./ ((4*pi)^2 * k * T_0 * F_n * Bw * tau * prf .* SNR_1 .* L_f * L_s)).^(1/4);
 figure;
-plot(P_d, R_max);
+plot(P_d, R_max./1000);
+title('Max range against probability of detection, with fluctuation losses');
+xlabel('Probability of Detection');
+ylabel('Maximum Range (km)');
