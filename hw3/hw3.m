@@ -26,7 +26,7 @@ P_fa = 1/(Bw*T_fa);	% probability of false alarm
 
 
 lambda = c / f;
-n = theta_B_h*prf/(6*omega_r);	% # of pulses
+n = theta_B_b*prf/(6*omega_r);	% # of pulses
 
 A_e = G * lambda^2 /( 4 * pi);	% effective aperture
 P_av = tau / prt * P_t;		% avg power
@@ -43,14 +43,16 @@ E_i = SNR_1 / (SNR_n * n); % integration efficiency factor
 
 % max range w/o fluctuation loss
 R_max_ll = (P_av * G * A_e * sig * n * E_i ./ ((4*pi)^2 * k * T_0 * F_n * Bw * tau * prf .* SNR_1 * L_s)).^(1/4);
-plot(P_d, R_max_ll./1000);
-title('Max range against probability of detection, without fluctuation losses');
+plot(P_d, R_max_ll./1000, 'red');
+title('Max range against probability of detection');
 xlabel('Probability of Detection');
 ylabel('Maximum Range (km)');
 
 R_max = (P_av * G * A_e * sig * n * E_i ./ ((4*pi)^2 * k * T_0 * F_n * Bw * tau * prf .* SNR_1 .* L_f * L_s)).^(1/4);
-figure;
-plot(P_d, R_max./1000);
-title('Max range against probability of detection, with fluctuation losses');
+hold;
+plot(P_d, R_max./1000, 'green');
+title('Max range against probability of detection');
 xlabel('Probability of Detection');
 ylabel('Maximum Range (km)');
+
+legend('w/o fluctuation loss', 'w/ fluctuation loss');
