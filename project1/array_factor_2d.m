@@ -1,7 +1,7 @@
 function E = array_factor_2d(lambda, theta_x, theta_y, w, dn, a_0)
 	elements = length(dn);
 	theta = atan(sqrt(tan(theta_x).^2+tan(theta_y).^2));
-	phi = atan2(tan(theta_x),tan(theta_y));
+	phi = atan2(tan(theta_y),tan(theta_x));
 	k = 2*pi/lambda;
 	a_r = [sin(theta).*cos(phi); sin(theta).*sin(phi);  cos(theta)];
 	E = [];
