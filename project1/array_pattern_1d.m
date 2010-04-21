@@ -1,51 +1,35 @@
 N = 501;
 elements = length(d);
 % elements = 13;
-lambda = .03;
-a_0 = [sin(pi/4)*cos(0); sin(pi/4)*sin(0); cos(pi/4)];
-% a_0 = [0; 0; 1];
+lambda = .1;
+theta_x0 = pi/4;
+theta_y0 = 0;
+
+theta0 = atan(sqrt(tan(theta_x0).^2+tan(theta_y0).^2));
+phi0 = atan2(tan(theta_y0),tan(theta_x0));
+
+% a_0 = [sin(theta0)*cos(phi0); sin(theta0)*sin(phi0); cos(theta0)];
+a_0 = [0; 0; 1];
 
 % w = hann(elements);
-% w = hamming(elements);
+%w = hamming(elements);
 w = rectwin(elements);
-
+dn = d;
 % spacing = lambda/2;
 % spacing = .36/elements;
 % delta = .36/11.0;
-the_angle = 50*pi/180;
+
 
 % =========================
 % = no touchy beyond here =
 % =========================
 theta_x = linspace(-pi/2, pi/2, N);
 theta_y = linspace(-pi/2, pi/2, N);
+theta_y = zeros(1,N);
 
-theta = atan(sqrt(tan(theta_x).^2+tan(theta_y).^2));
-phi = atan(tan(theta_x)/tan(theta_y));
 
-dn =  zeros(3, elements);
-dn(1,1:elements) = spacing*[0:elements-1];
-% dn(1,1:elements) = delta.*[0 1 4 9 11];
-dn = d';
+E_db = array_factor_2d(lambda, theta_x, theta_y, w, dn, a_0);
 
-k = 2*pi/lambda;
-a_r = [sin(theta)*cos(phi); sin(theta)*sin(phi);  cos(theta)];
-E = [];
-% loop through our angle
-for ii=1:length(theta_x)
-	tmp = 0;
-	
-	% now loop through all the elements
-	for jj=1:elements
-		% get the location of where we want the E-field to be computed
-		a = a_r(:, ii) - a_0;
-		tmp = tmp + w(jj)*exp(j*k*dot(a,dn(:,jj)));
-	end
-	E = [E tmp];
-end
-
-E_db = 10*log10((E.*conj(E)).^2);
-E_db = E_db - max(E_db);
 title_str = sprintf('Azimuthal antenna pattern (%i elements, 0\\circ)', elements);
 % title_str = sprintf('Azimuthal antenna pattern (%i elements, %2.0f cm spacing)', elements, spacing*100);
 plot(theta_x*180/pi, E_db);
