@@ -26,7 +26,7 @@ P_fa = 1/(Bw*T_fa);	% probability of false alarm
 
 
 lambda = c / f;
-n = theta_B_b*prf/(6*omega_r);	% # of pulses
+n = theta_B_v*prf/(6*omega_r);	% # of pulses
 
 A_e = G * lambda^2 /( 4 * pi);	% effective aperture
 P_av = tau / prt * P_t;		% avg power
