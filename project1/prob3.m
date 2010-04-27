@@ -7,7 +7,7 @@ xlabel('horizontal');
 ylabel('vertical');
 
 
-N = 100;
+N = 51;
 elements = length(d);
 lambda = .1;
 a_0 = [0 0 0]';
