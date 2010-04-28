@@ -8,7 +8,8 @@ coord2 = [-3.9 1.95];
 % calculate distance in between them (in degrees)
 deg_dist = sqrt((coord1(2) - coord2(2)).^2 + (coord1(1) - coord2(1)).^2);
 
-time_diff = (timestamp(21,1) - timestamp(1,1));
+% looking at the dates, the first and last scan are 50 seconds apart
+time_diff = 50;
 
 vel_deg = deg_dist/time_diff;
 
@@ -27,3 +28,7 @@ r_a = c * Ts / 2;
 r_real = r_a + r;
 m_dist_real = sin(deg2rad(deg_dist)) * r_real;
 vel_real = m_dist_real / time_diff;
+
+% direction
+dir_vec = coord2 - coord1;
+angle = rad2deg(atan2(dir_vec(2),dir_vec(1)));

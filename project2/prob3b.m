@@ -9,7 +9,7 @@ elements = length(D);
 a_0 = [0; 0; 1];
 
 w = rectwin(elements);
-E = array_factor_2d(lambda, theta_y, theta_x, w, D, a_0);
+E = array_factor_2d(lambda, theta_x, theta_y, w, D, a_0);
 
 plot(theta_x*180/pi, E);
 % title('East-West antenna pattern')
